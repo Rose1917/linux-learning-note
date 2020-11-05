@@ -154,10 +154,25 @@
 
   ```shell
   #show all the branches
-  #use -r option to list all the remote branches
-  git -r branch
+  #use -r option to list the remote branches only
+  git [-r] branch
+  
+#to make a new branch based on the current branch
+  git branch branch_name
+  
+  #to checkout a branch.use -b option if the target branch is not exist.it will create a new branch
+  git checkout [-b] branch_name
+  
+  #to remove a branch (you can excute this command only when your different branch are merged)
+  git branch -d branch_name
+  
+  #Force to delete a branch even if the modification is not merged.
+  git branch -D branch_name
+  
+  #to merge a branch to current branch(curupts are not accepted)
+  git merge target-branch
   ```
-
+  
   
 
 #### 6.EXPECT
