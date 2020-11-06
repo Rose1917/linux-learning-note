@@ -196,3 +196,24 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
 * 默认参数：同C++。需要注意以下几点：必选参数在前，默认参数在后；当有多个默认参数的时候，可以按顺序提供，也可以使用=连接，就不必按顺序提供参数；默认参数本身是一个变量，在定义的时候就被定义出来了。
 * 可变参数：定义的时候前面加上*即可。这样函数就不会检查参数的个数问题。可以使用\*加上Tuple或者List来把一个Tuple变成可变参数。
 * 关键字参数：定义的时候使用**即可。使用的时候，必须使用Key=value的样式。在函数内部自动组装成一个Map.
+
+### Day 2 Python高级特性
+
+#### 2.1 切片
+
+* 切片：Python中方便地取出List或者Tuple中的索引范围内的N个元素
+
+* 使用：
+
+  ```python
+  #index denote the index of the first element
+  #number denote the number of elements you want
+  list_name[index_left,index_right]
+  
+  #Specially,you can use the negative index.
+  #It looks like this.
+  #0   1  2  3  4 
+  #-5 -4 -3 -2 -1
+  ```
+
+  
