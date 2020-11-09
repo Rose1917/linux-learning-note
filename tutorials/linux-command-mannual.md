@@ -69,7 +69,7 @@
 
   ![img](https://mmbiz.qpic.cn/mmbiz/9Eibnmwqk0Ajsad34njicm2Z2G1hYbRFV0QwQOnyibLC5dTe3qLpYBicsibY9pyRzwKdPicHBYcJ3WXWJ3ia8LicbTJB5Q/640?wx_fmt=other&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
-#### 5.GIT命令详解
+#### 5. GIT命令详解
 
 * 创建工作区
 
@@ -157,25 +157,22 @@
   #use -r option to list the remote branches only
   git [-r] branch
   
+  #to make a new branch based on the current branch
+    git branch branch_name
+  
+    #to checkout a branch.use -b option if the target branch is not exist.it will create a new branch
+    git checkout [-b] branch_name
+  
+    #to remove a branch (you can excute this command only when your different branch are merged)
+    git branch -d branch_name
+  
+    #Force to delete a branch even if the modification is not merged.
+    git branch -D branch_name
+  
+    #to merge a branch to current branch(curupts are not accepted)
+    git merge target-branch
   ```
 
-#to make a new branch based on the current branch
-  git branch branch_name
-
-  #to checkout a branch.use -b option if the target branch is not exist.it will create a new branch
-  git checkout [-b] branch_name
-
-  #to remove a branch (you can excute this command only when your different branch are merged)
-  git branch -d branch_name
-
-  #Force to delete a branch even if the modification is not merged.
-  git branch -D branch_name
-
-  #to merge a branch to current branch(curupts are not accepted)
-  git merge target-branch
-  ```
-  
-  
 
 #### 6.EXPECT
 
@@ -211,7 +208,7 @@
 * 和进程对话——关键字`spawn`:如果不使用这个关键字，那么就只能对标准输入进行预测然后进行输出。但是`spawn`关键字使得我们可以和进程对话。
 * 让用户参与其中：在一些特殊的场合中，我们需要人来参与其中，这个时候就可以使用`interact`关键字
 
-#### 6. 使用静态库文件
+#### 7. 使用静态库文件
 
 * 静态库文件和动态库文件：静态库文件和动态库文件都具有共享性，即一次编译之后可以被其他程序调用而不必重复编写。但是机制上又存在一些不同。静态库文件在编译的时候将静态库文件中的文件拿来整合到可执行文件之中。而动态库文件则不同动态库文件在编译的时候只会保留一个对库文件的链接，在加载或者运行的时候才会将代码加载过来。
 
@@ -234,7 +231,7 @@
 
   NB:静态库文件的顺序准则——库文件放后面；库文件之间被调用的放后面
 
-#### 7.使用动态库文件
+#### 8.使用动态库文件
 
 * 动态链接：共享库文件是一种特殊的可重定位目标文件，它可以在可执行文件加载或者运行的时候被动态地装入内存并自动链接。动态链接改善了静态链接占用磁盘空间的问题，而且更新不便。
 
@@ -248,7 +245,7 @@
   g++ -o main main.c ./myadd.so
   ```
 
-#### 8. Makefile
+#### 9. Makefile
 
 * Make: make是一个编译指令，可以用来简化编译相关的操作。
 
