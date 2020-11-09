@@ -157,18 +157,20 @@
   #use -r option to list the remote branches only
   git [-r] branch
   
+  ```
+
 #to make a new branch based on the current branch
   git branch branch_name
-  
+
   #to checkout a branch.use -b option if the target branch is not exist.it will create a new branch
   git checkout [-b] branch_name
-  
+
   #to remove a branch (you can excute this command only when your different branch are merged)
   git branch -d branch_name
-  
+
   #Force to delete a branch even if the modification is not merged.
   git branch -D branch_name
-  
+
   #to merge a branch to current branch(curupts are not accepted)
   git merge target-branch
   ```
@@ -208,3 +210,65 @@
 
 * 和进程对话——关键字`spawn`:如果不使用这个关键字，那么就只能对标准输入进行预测然后进行输出。但是`spawn`关键字使得我们可以和进程对话。
 * 让用户参与其中：在一些特殊的场合中，我们需要人来参与其中，这个时候就可以使用`interact`关键字
+
+#### 6. 使用静态库文件
+
+* 静态库文件和动态库文件：静态库文件和动态库文件都具有共享性，即一次编译之后可以被其他程序调用而不必重复编写。但是机制上又存在一些不同。静态库文件在编译的时候将静态库文件中的文件拿来整合到可执行文件之中。而动态库文件则不同动态库文件在编译的时候只会保留一个对库文件的链接，在加载或者运行的时候才会将代码加载过来。
+
+* 静态库文件和动态库文件的标识：在`Linux`中静态库文件使用`.a`结尾，动态库文件使用`.so`结尾。在`Windows`中，静态库文件使用`.lib`结尾，动态库文件使用`.dll`结尾。
+
+* 使用静态库文件：静态库文件必须和静态使用（即在编译的时候必须将库文件整合进来）。
+
+  ```shell
+  g++ -c myadd.cpp #generate the obj file
+  ar rcs mylib.a myadd.o #generate the lib file
+  
+  #The following commands show how to use the static lib
+  g++ -c main.cpp
+  g++ -static main main.o myadd.a
+  
+  #You can use like -lm option to specify the extra lib 
+  #you want to use.
+  
+  ```
+
+  NB:静态库文件的顺序准则——库文件放后面；库文件之间被调用的放后面
+
+#### 7.使用动态库文件
+
+* 动态链接：共享库文件是一种特殊的可重定位目标文件，它可以在可执行文件加载或者运行的时候被动态地装入内存并自动链接。动态链接改善了静态链接占用磁盘空间的问题，而且更新不便。
+
+* 使用动态库文件：
+
+  ```shell
+  #The follwing code show how to generate the .so file
+  g++ -shared -fPIC myadd.so myadd.cpp
+  
+  #The follwing code show how to use the .so file
+  g++ -o main main.c ./myadd.so
+  ```
+
+#### 8. Makefile
+
+* Make: make是一个编译指令，可以用来简化编译相关的操作。
+
+* make的基本语法：
+
+  ```makefile
+  #The follwing command show the basic grammar of make
+  target:obj1.o obj2.o obj3.o
+  	gcc option obj1.o obj2.o obj3.o
+  #if there is only one target,you can use make to run 
+  #the target.But if there is other target,you have to 
+  #specify the target name.
+  
+  #The following command show the use of variables in makefile
+  LIBS = -lm
+  OBJS = obj1.o obj2.o obj3.o
+  main:$(OBJS)
+  	g++ $(LIBS) main OBJS
+  
+  #Actually,if one target relys on another target.you can put the target name on the right of comma.In this case,it will execute the corresponding command if  the target does not exist
+  ```
+
+  
