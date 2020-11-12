@@ -158,7 +158,7 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
 #### 1.15 Set
 
 * Set:同C++中的Set.不能有重复的元素
-* Set的定义：使用set([])来进行定义
+* Set的定义：使用一个list来进行定义，形如set([])来进行定义.（需要注意一点，之前的定义我们都是使用符号就可以完成定义，但是这里我们使用了一个函数`set`来进行定义，他的参数是一个`list`才行。）
 * Set的元素添加和删除：使用add函数来进行添加，使用remove函数来进行元素的删除
 * Set的元素运算：
   * 交集：&
@@ -187,7 +187,7 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
 
   NB:`pass`关键字表示什么也不做。如果没有pass,有的地方就会报错
 
-  NB:参s数检查，Python不会检查数据类型对不对，指挥检查参数的个数。但可以使用函数`isinstance(variable,(typelist))`来进行检查
+  NB:参数检查，Python不会检查数据类型对不对，指挥检查参数的个数。但可以使用函数`isinstance(variable,(typelist))`来进行检查
 
   NB：`Python`可以返回多个函数值（实际上是一个tuple)
 
@@ -214,6 +214,170 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
   #It looks like this.
   #0   1  2  3  4 
   #-5 -4 -3 -2 -1
+  
+#you can choose every two 
+  tuple_name[index1:index2:from_every_count]
+  ```
+  
+
+#### 2.2 迭代
+
+* `Python`和其他语言的迭代：`Python`中的迭代不仅可以用于`List`或者`Tuple`中，可以用于一些其他的可迭代的对象上。
+
+* `Python`中的迭代
+
+  ```python
+  #1.iteration in dic
+  #it will get the key automatically
+  score_table={'renyanjie':100,'hanrongze':99,'cuihaida':97,'zhaozehua':90}
+  for key in score_table:
+      print(key)
+  #2. iteration in set
+  #it will get every single value in the set
+  score_table=set(['renyanjie','hanrongze','cuihaida','zhaozehua'])
+  for key in score_table:
+      print(key)
+  
+  ```
+
+#### 2.3 列表生成
+
+* ```python
+  #Use for structure to generate a special list
+  result_list = [x*x  for x in range(1,11)]
+  for j in result_list:
+      print(j)
+  #use two iteration
+  [m + n for m in 'ABC' for n in 'XYZ']
+  #use if to select the elements
+  #!/bin/python3.7
+  result_list = [ x for x in range(1,11) if x%2==0 ]
+  for j in result_list:
+      print(j)
+  ```
+
+#### 2.4 生成器
+
+* 生成器和列表生成：列表生成的方法会生成我们需要的列表，但是在一些场合里这样非常浪费空间。生成器只保存元素生成的逻辑而不实在地生成元素。
+
+* 生成器的语法：
+
+  ```python
+  #use () instead of []
+  result_generator=(x for x in range(10))
+  
+  #get the element of generator
+  #warning:every generator has a static pointer which
+  #indicates the element of the list
+  next(generator_name)
+  
+  #use for structure to get element
+  for x in generator_name:
+      print x
+   
+  #Error log:if generator can not get next element
+  #it will throw a stopiteration error.
+  ```
+
+* 用函数定义一个生成器：
+
+  ```python
+  #if a function defination contains the keyword yield,then this function is generator function
+  #Specially,every time you call the next function
+  #the function will be executed.it returns when it meets the yield keyword.And next time it will continue from the yield keyword.
+  #Once a function is defined as generator.you almost never will get the return value of it.If you really need it.You can use StopIteration.value
   ```
 
   
+
+#### 2.5 迭代器
+
+* Iterable和Iterator:可以被for循环直接迭代使用的是Iterable的，可以使用next调用返回元素的是Iterator.
+
+#### 2.6 高阶函数
+
+* 高阶函数：将指向函数的变量作为参数出入另外一个函数，这个就叫高阶函数
+
+  ```python
+  def add(x, y, f):
+      return f(x) + f(y)
+  
+  print(add(-5, 6, abs))
+  ```
+
+#### 2.7 map/reduce/filter/sorted
+
+* map:有点类似于C++中的for_each的函数使用。它的第一个参数是一个函数，第二个参数是一个list.返回的是一个generator.可以使用list函数得到对应的list.
+
+  ```python
+  >>> def f(x):
+  ...     return x * x
+  ...
+  >>> r = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+  >>> list(r)
+  [1, 4, 9, 16, 25, 36, 49, 64, 81]
+  ```
+
+* reduce:有点类似于C++中的accumulate函数，可以用来实现对元素的累计操作，第一个参数是一个函数，第二个参数同样是一个list.其中第一个函数必须能够接受两个参数。
+* filter:类似c++中的一个函数，具体是什么我忘记了。接受两个参数，第一个参数是一个判断函数，第二个参数是一个list.
+* sorted：函数可以对list进行排序，同时它可以指定key参数，则list会先被key所指定的函数作用，然后再进行排序。如果需要反向输出，可以指明Reverse=True.
+
+#### 2.8 匿名函数
+
+* 匿名函数：也就是lambda函数直接使用。
+
+  ```python
+  map(lambda x:x*x,[1,2,3,4])
+  ```
+
+#### 2.9 Decorator
+
+* Decorator的作用：不改变原来的函数的功能基础上，新增一些功能。利用函数参数，可以很容易实现这个功能，新定义一个函数，这个函数执行原来的函数而且新增一些功能。
+
+* @语法：在函数上面增加一行注释，即表示使用某一个装饰者来处理它。例如如下的语法
+
+  ```python
+  @log
+  def now x
+  	print x
+  #======等价于=======#
+  now=log(now)
+  ```
+
+  
+
+#### 2.10 偏函数
+
+* 偏函数：偏函数的存在是为了解决需要大量调用一些固定参数的函数调用的问题。例如一个函数有两个参数，其中一个参数是可变的，另外一个是不变的。如果不使用偏函数，就需要大量地写如下的程序。使用偏函数就可以把第二个参数给固定住。
+
+  ```python
+  fun(ar1,ar2=const)
+  fun(ar1,ar2=const)
+  fun(ar1,ar2=const)
+  fun(ar1,ar2=const)
+  ```
+
+* 偏函数的使用方法：
+
+  ```python
+  import functools
+  new_func=functools.partial(init_func,arguname=const_val)
+  #If you do not want to use the set-value.you can also call the function while specifying the argument value.
+  ```
+
+### Day 3 面对对象编程
+
+#### 3.1 Python的文件目录
+
+* 模块：一个py文件就是一个模块。
+* 包：包中有不同的模块。但是需要注意的是，一个包（文件夹）中必须有一个__init__.py文件；包本身也是一个模块，但是它实际对应的是底下的`__init_`文件
+
+#### 3.2 Python安装第三方模块
+
+* pip:安装Python第三方模块的工具,一般来说第三方库都会在Python的官方网站www.pypi.python.org注册。
+
+  ```shell
+  pip3 install package_name
+  ```
+
+* Anaconda:基于Python的数据处理和科学计算平台，而且它内置了很多常用的第三方库。该软件会将第三方模块安装在自己的目录下，不影响Python

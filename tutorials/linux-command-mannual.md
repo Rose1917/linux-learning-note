@@ -268,4 +268,31 @@
   #Actually,if one target relys on another target.you can put the target name on the right of comma.In this case,it will execute the corresponding command if  the target does not exist
   ```
 
+
+#### 10. VIM
+
+* 常用快捷键
+
+  ```shell
+  #Two comparision i-a I-A
+  i:从当前字符开始插入
+  I:从当前行的第一个非空格字符开始插入
+  a:从当前字符的下一个字符开始插入
+  A:从当前行的最后一个字符开始插入
+  #The following instructions will make new lines
+  o:从当前的下一行开始插入新的一行
+  O：从当前行的上一行开始新的一行
+  
+  #delete a word
+  de:删除到本单词的末尾
+  db:删除到本单词的开头
+  dE:效果同de，但是忽略标点
+  dB:效果同db,但是忽略标点
+  
+  #
+  xG:跳转到某一行
+  
+  
+  ```
+
   
