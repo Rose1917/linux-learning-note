@@ -266,6 +266,9 @@
   	g++ $(LIBS) main OBJS
   
   #Actually,if one target relys on another target.you can put the target name on the right of comma.In this case,it will execute the corresponding command if  the target does not exist
+  
+  #use the function to get all the files path
+  LIBS=$(wildcard,include/*.so)
   ```
 
 
