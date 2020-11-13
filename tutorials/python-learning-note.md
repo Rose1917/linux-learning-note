@@ -215,6 +215,8 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
   #0   1  2  3  4 
   #-5 -4 -3 -2 -1
   
+  ```
+
 #you can choose every two 
   tuple_name[index1:index2:from_every_count]
   ```
@@ -381,3 +383,29 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
   ```
 
 * Anaconda:基于Python的数据处理和科学计算平台，而且它内置了很多常用的第三方库。该软件会将第三方模块安装在自己的目录下，不影响Python
+
+#### 3.3 Python类
+
+* 类的定义：
+
+  ```python
+  class class_name(baseclass_name)
+  #if no base class needs to be specified.use object which is the base class of all the classes.
+  ```
+
+* 类的使用：
+
+  ```python
+  instance_name=class_name()
+  ```
+
+* 类的构造函数
+
+  ```python
+  #the first argument of __init__ method must be self like all the functions in classes.
+  def __init__(self,arg1,arg2...)
+  	...
+      ...
+  ```
+
+  
