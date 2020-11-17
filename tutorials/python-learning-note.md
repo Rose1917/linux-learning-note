@@ -373,6 +373,7 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
 
 * 模块：一个py文件就是一个模块。
 * 包：包中有不同的模块。但是需要注意的是，一个包（文件夹）中必须有一个__init__.py文件；包本身也是一个模块，但是它实际对应的是底下的`__init_`文件
+* 
 
 #### 3.2 Python安装第三方模块
 
@@ -406,6 +407,309 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
   def __init__(self,arg1,arg2...)
   	...
       ...
+  #Once we define the init function.
+#The concerning arguments are forced to give
+  ```
+  
+
+* Python类新绑定变量
+
+  ```python
+  #!/bin/python3.7
+  class student(object):
+      def print_info(self):
+          print('This\'s a test infomation')
+  renyanjie=student()
+  renyanjie.print_info()
+  student.name='xiaohong'
+  print(renyanjie.name)
+  
+  #Class variable and instance variable
+  #!/bin/python3.7
+  class student(object):
+      name='xiaoming'
+      def __init__(self,name):
+          self.name=name
+  
+  #The access to variable __name is prohibited.The following example shows the use of class variable and instance variable.
+  s=student('xiaohong')
+  print(s.name)
+  s.name='xiaogang'
+  print(s.name)
+  print(student.name)
+  #you can use del keyword to delete the variable of instance
+  del s.name
+  print(s.name)
+  #But you can use function to get access to the variable beginning with __
+  #Cause in this case,we are not trying to get access to the variable directly.
+  #On the  other hand,we use the function of instance which does not violate the rule.
+  ```
+
+* Python类的访问限制
+
+  ```python
+  #By default,we have access to the all the variables of class.But in some other cases,we do not want the capsulation erupted.That's how the access limit is introduced.
+  #The rule of access limit is simple.
+  #Name a variable beginning with __.
+  
+  #!/bin/python3.7
+  class student(object):
+      def __init__(self,name):
+          self.__name=name
+          print('This\'s a test infomation')
+      def get_name(self):
+          return self.__name
+  
+  #The access to variable __name is prohibited:error:do not have the attribute __name.
+  renyanjie=student('xiaohong')
+  print(renyanjie.__name)
+  
+  #But you can use function to get access to the variable beginning with __
+  #Cause in this case,we are not trying to get access to the variable directly.
+  #On the  other hand,we use the function of instance which does not violate the rule.
+  
+  print(renyanjie.get_name())
+  
+  #Actually,the python intepreter will transfer this kindof variable to _classname__vaialename.But please do not use variable this way.The example is as follow.
+  renyanjie=student('xiaohong')
+  print(renyanjie._student__name)
+  
+  #Finally let's see another mistake use of private variable.Since the __name variable has been change into _student__name,what you have done is just to add a new variable for the instance which's name is '__name'
+  renyanjie=student('xiaohong')
+  renyanjie.__name='xiaohonghong'
+  renyanjie.__name
+  
+  #Addtion:
+  #As usual,we assume the variable beginning with only one '_' is pricate.
+  #Although you can indeed get access to them.But that's a bad access.
+  #Besides,variable like __variale__ is special which can be accessed direcly.
+  
+  ```
+
+* 多态：
+
+  ```python
+  #Generally speaking,the child class will be regarded as the father class.(But it is not permitted inreturn).And in this case,we can use the function direcly,and do not need to care what function will be executed.like this:
+  class Animal(object):
+      def run(self):
+          print('animal is running')
+  class Dog(Animal):
+      def run(self):
+          print('Dog is running')
+  def print_run(animal):
+      animal.run()
+  
+  little_dog=Dog()
+  print_run(little_dog)
+  
+  #The descriptions above are polymorphism for the static language.Since python is a dynamic language,it is more free:python even do not check if the argument type is the class type.it only care if the argument has a memeber function called run.
+  
+  #Althoug python is so free,sometimes we still need to figure out a datatype of a variable.we use instance function.
+  
+  little_dog=Dog()
+  print(isinstance(little_dog,Dog))
+  print(isinstance(little_dog,list))
+  
+  #For the unknown type.we use type function.Especially,sometimes we need to judge the type of variable dynamically,the following constants may be useful.str,int
+  type(123)
+  ```
+
+* 获取一个类的详细信息：
+
+  ```python
+  #Get all the variables and functions of a class.
+  #Particularly,the variables and functions like __name__ have special application.
+  #For the function:__function_name__
+  #the python will transfer function_name(obj) to obj.__function_name__.That means if we want rewrite len function logic,we just need to write function called __len__ in our class which is very convenicent and elegant.
+  print(dir(little_dog))
+  '''['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'run']
+  '''
+  #Atrribution
+  #hasattr():to juedge
+  #getattr():to get the value of attr
+  #setattr():to set the value of attr
+  ```
+
+#### 3.4 Python类高级特性
+
+* slot:
+
+  ```python
+  #we can use a __slot__ variable of a class to restrict  all the variables the class could use.
+  #PS:__slot__ variable is only effective for the current class,not for the sub class.But Specially,if sub class also defined the __slot__,then the base __slot__ will be effective.
+  class student(object):
+      __slots__=('age','name')
+      def __init__(self,name,age):
+          self.name=name
+          self.age=age
+  s=student('xiaoming',13)
+  #since gender is not defined in the slots,the following action is prohibited
+  s.gender='male'
+  
+  ```
+
+* Useful Decorator:
+
+  ```python
+  #Fisrly,we will show the use of property and setter.
+  #First all all,the @propery and @variable_name.setter are used together.Only When you use @property decorator,another corresponding decorator will be established.That means you can use the @property decorator single.but you can not use  variable.setter decorator single.(And in that case,it will be a readonly attribute)
+  #Here are some points you have to obey
+  #1.The getter and setter function got the same name.
+  #2.One is @property.Another is @variable.setter
+  #3.As usual,the function name is the same with the variable.
+  #!/bin/python3.7
+  class student(object):
+      __slots__=('_age','_name')
+      def __init__(self,name,age):
+          self._name=name
+          self._age=age
+      @property
+      def age(self):
+          return self._age
+      @age.setter
+      def age(self,new_age):
+          self._age=new_age
+  s=student('xiaoming',13)
+  print(s.age)
+  s.age=14
+  print(s.age)
+  ```
+
+#### 3.5 多继承
+
+* 多继承：多继承是指一个类继承自多个父类。
+
+  ```python
+  #runable and flyable class are both father class of dog.
+  #Traditionaly,we call this kind of inherition mixln
+  class dog(runable,flyable):
+      pass
+  ```
+
+#### 3.6 定制类
+
+* \_\_str\_\_:为一个类实现一个\_\_str\_\_函数，即可在使用print函数的时候自动调用该函数，返回我们所需要的字符串即可。非常方便。
+
+  ```python
+      def __str__(self):
+          return 'student:%s,age:%d' %(self._name,self._age)
+  s=student('xiaoming',13)
+  #print(s.age)
+  #s.age=14
+  #print(s.age)
+  print(s)
+  ```
+
+* \_\_repr\_\_:该函数会在interactive mode中输入对应的对象的时候被调用，输出到控制台中，也即可以认为该方法是专门给调试人员使用的，而不会输出到标准输出。
+
+  ```python
+  >>> import advanced_feature
+  student:xiaoming,age:13
+  ```
+
+* \_\_iter\_\_:该函数会在next该实例的时候返回对应的结果值
+
+* \_\_getitem\_\_:该函数会在使用`[]`的时候自动调用，该方法和上面的方法搭配使用
+* \_\_getattr\_\_:一般来说，如果一个对象不存在某个方法，那么会报错，但是在一些特殊的情况下，我们希望即使不存在这个也要返回一个值。在这种情况下，可以重写\_\_getattr\_\_方法，这样在找不到对应的属性的时候，就会调用这个方法。除此以外，拓展地说，我们可以使用该方法来处理一些复杂的请求，进行请求的转发。
+* \_\_call\_\_:重写该方法可以使得调用实例本身。
+
+#### 3.7 枚举类型
+
+* 枚举类：枚举类是库函数中的一个类，我们可以直接传入参数，这样它就拥有一些标签，返回一个拥有对应标签的实例。每一个标签其实还有一个整数值对应，从1开始计数。
+
+* 自定义枚举类：自定义枚举类其实是完全OK的，（无非打印的时候不太舒服而已），但自定义的时候一定要注意不同的标签值不同。
+
+* 使用unique装饰器：unique是一个装饰器，可以保证成员的值互不相同。该装饰器必须和`enum`类搭配使用
+
+  NB：其实使用默认的类就可以了，标签也不会重值,下面给出用法
+
+  ```
+  #!/bin/python3.7
+  from enum import Enum,unique
+  
+  Workday=Enum('day',('Mon','Tue','Wed','Thur','Fri'))
+  print(Workday.Mon)
+  ```
+
+#### 3.8 动态类
+
+* type:type不仅可以对变量类型的识别，还可以动态地创建类。它接受三个参数，分别是类名、父类、函数绑定
+
+* metaclass:类是实例的模板，metaclass是类的模板。它的使用如下：
+
+  ```python
+  # metaclass是类的模板，所以必须从`type`类型派生：
+  class ListMetaclass(type):
+      def __new__(cls, name, bases, attrs):
+          attrs['add'] = lambda self, value: self.append(value)
+          return type.__new__(cls, name, bases, attrs)
+  ```
+
+  https://stackoverflow.com/questions/100003/what-are-metaclasses-in-python
+
+#### 3.9 错误处理
+
+* 错误捕捉：先执行try中的代码，如果出现预期之中的错误，那么就执行expect后的代码，最后执行finally后面的代码。finally是可选的.
+
+  ```python
+  try:
+      ...
+      ...
+  expect error_type as var_name:
+      ...
+      ...
+  expect error_type as var_name:
+      ...
+      ...
+  expect error_type as var_name:
+      ...
+      ...
+  else:
+      ...
+  finally:
+      ...
+      ...
+  ```
+
+* 错误捕捉的trick:所有的错误都继承自BaseException.但是不同的Exception之间也是有继承关系的，这就容易造成捕捉的短路。常见的错误类型和继承关系见：
+
+  https://docs.python.org/3/library/exceptions.html#exception-hierarchy
+
+* 错误捕捉的层次：错误会不断地循着函数的调用栈往上抛，直到到Python的解释器为止，打印出来一个错误信息。
+* logging:logging是Python内置的一个函数，可以帮我们记录错误，让程序继续执行下去。
+* 抛出错误：我们可以使用raise关键字抛出一个错误的实例即可，如果raise后面不加参数，就会把当前的错误原样抛出。
+
+#### 3.10 调试
+
+* 断言：
+
+  ```python
+  assert a!=0,'n is zero'
+  #we can turn off the assert by using the option -O
+  ```
+
+* logging:使用logging可以控制输出信息的级别,只需要通过配置即可
+
+  ```python
+  logging.basicConfig(level=logging.INFO)
+  '''
+  level=logging.INFO
+  level=logging.DEBUG
+  level=logging.WARNING
+  level=logging.ERROR
+  '''
+  ```
+
+* 使用pdb:引入pdb.直接pdb对应的Python文件
+
+  ```shell
+  pdb test.py
+  b line
+  b function_name
+  r #run till the next breakpoint
+  c #continue till the next breakpoint
+  n #next step
+  
   ```
 
   
