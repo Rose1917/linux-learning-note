@@ -299,3 +299,55 @@
   ```
 
   
+
+#### 11.Grep && FP
+
+* Grep
+
+  ```shell
+  #The basic use of grep.It will get from the standard input.
+  grep string
+  #Alternatively,we can set the --color=auto option to make it readable.
+  grep string --color=auto
+  #use -n option to show the line number
+  grep -n string file_name
+  #use -v option to invert the match.only show the not-matching lines.
+  grep -v string file_name
+  #use -i option to ignore the case distinctions.
+  grep -vi string file_name
+  #use [] to choose different character in a string,remeber [] will transfer to a single character
+  ```
+
+  
+
+* formal expresion
+
+  ```shell
+  grep t[ae]st file_name
+  #we can use ^ to filter some cases,for example the following will grep strings including 'oo' but will 'goo' will be excluded.
+  grep [^g]oo file_name
+  #use line init symbol ^,eg:the following command will filter the lines with 'the' beiginning
+  grep ^the file_name
+  #use . which denotes a signle char
+  grep g..d file_name
+  #use * which denotes any times repetition of last char
+  grep goo*d file_name
+  #use {} to specify the times of repitition,the following command will filter the lines goo gooo...
+  grep go\{2,\}
+  ```
+
+* extend expression
+
+  ```shell
+  #use ? which denotes zero or one times of repetition.o and oo are accepted.
+  egrep oo? filename
+  #use + which denotes 1 or more times of repetition.o and oo and ooo... are acceptted.
+  egrep o+ filename
+  #use | to handle different cases.like and dislike will all be chosen.
+  egrep like|dislike
+  #use () which will first be transfered.glad and good will be accepted.+and * ? will work on () too.
+  egrep g(la|oo)d
+  
+  ```
+
+  
