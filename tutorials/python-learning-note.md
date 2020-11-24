@@ -411,7 +411,6 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
 #The concerning arguments are forced to give
   ```
   
-
 * Python类新绑定变量
 
   ```python
@@ -712,4 +711,165 @@ NB：常见的编码有`ASCII/Unicode/UTF-8`编码。`ASCII`编码略过不讲�
   
   ```
 
+
+#### Day 4 IO和进程
+
+#### 4.1 StringIO
+
+* StringIO:StringIO允许我们在内存中新建一个StringIO对象并且对这个String进行读写.和自定义的String进行读写不同，StringIO是一个活动的对象，我们可以向该对象输出，也可以进行输入（但是需要注意输入不等于直接读自己写的内容），这就像水流，流过去就是流过去了，只有接收方才能收到。
+
+  ```python
+  from io import StringIO
+  f=StringIO()
+  #IO Write
+  f.write('test')
+  print(f.getvalue())
   
+  #you can also read from stringIO like this
+  while true:
+      s=f.readline()
+      if s=='':
+          break
+      print(s.strip())
+      
+  ```
+
+#### 4.2 ByteIO
+
+* ByteIO:和StringIO类似，ByteIO是按照对应的是将二进制数字直接写入的。
+
+  ```python
+  from io import ByteIO
+  f1=BytesIO()
+  f1.write('Test'.encode('utf-8'))
+  print(f1.getvalue())
+  f1.read()
+  ```
+
+#### 4.3 os类
+
+* name变量：识别出操作系统的信息
+
+  ```python
+  import os
+  print(os.name)
+  ```
+
+* uname函数:识别出操作系统的详细信息
+
+  ```python
+  os.uname()
+  ```
+
+* getpid函数：获取当前进程的pid
+
+  ```
+  os.getpid()
+  ```
+
+  
+
+* env变量：操作系统的所有的环境变量,使用该变量你可以获取到很多有用的信息.而通过指定get方法我们还可以获得对应的具体的变量的信息。
+
+  ```python
+  #get all of the environment variables
+  os.environ
+  #get a specified environment variable value
+  os.environ.get('PWD')
+  os.environ.get('PATH')
+  os.environ.get('LOGNAME')
+  os.environ.get('SHELL')
+  ```
+
+* 目录操作:
+
+  ```python
+  #print the abs path of a relative path
+  os.path.abspath('.')
+  os.mkdir('./testdir')
+  os.rmdir('./testdir')
+  #handle the different os issue:the seporators are different in different os.join and split will handle this issue well.
+  os.path.join('.','test')
+  #this function will split according to path
+  os.path.split('/home/use/michale.txt')
+  #this function will split according to text(by punc)
+  ```
+
+* 文件操作
+
+  ```python
+  #rename
+  os.rename('src.txt','des.txt')
+  #remove
+  os.remove('test.txt')
+  #The following functions will be found in module 	shutil
+  ```
+
+#### 4.4 序列化
+
+* 序列化：所谓序列化就是将内存中的数据变为可存储、传输的数据。反序列化就是将这些数据恢复到内存中。在Python中分别叫做`pickling`和`unpickling`.
+
+  NB:对于对象这些数据是不能直接进行存储和传输的（因为是一个指针），所以需要序列化。序列化是一个很常见的概念，在不同的语言中都有所实现例如Java中的serialization，marshalling,flattening.
+
+* pickle模块：Python中用来实现序列化的模块的名字叫做pickle.下面是pickle模块的一些方法的使用
+
+  ```python
+  import pickle
+  d=dic(name='Bob',age=20,socre=80)
+  #dumps function:will transfer an object to bytes array.
+  pickle.dumps(d)
+  #dump function:will transfer transfer an object to bytes array and then stream out to a file-like object.
+  
+  #Reversly,we can use loads and load function to read from bytes or file-like object
+  pickle.loads(bytes_array)
+  pickle.load(file_like_object)
+  ```
+
+* 序列化的不足：序列化只能用于Python，兼容性不够（甚至不同版本的Python也不能很好地兼容）。因此考虑兼容性，可以将数据存放在xml或者json文件中。
+
+#### 4.5 JSON
+
+* JSON:Json是一种语言格式，目的是用于存储数据（或者叫做信息）。json不属于任何一种语言，有自己独立的标准，因此可以在不同的编程语言之间传递数据。
+
+* Json的对象：json所表示的对象就是标准的javascript的对象。他们之间的对应关系如下图所示
+
+  | JavaScript |    Python    |
+  | :--------: | :----------: |
+  |     {}     |     dict     |
+  |     []     |     list     |
+  |  “string”  |     str      |
+  |  1234.56   | int or float |
+  | true/false |  True/False  |
+  |    null    |     None     |
+
+  
+
+* json模块：
+
+  ```python
+  #use json module
+  import json
+  #@argu:a python object
+  #@return:standard json string
+  json.dumps(dict_object)
+  #@argu:a python object
+  #@return:standard json string
+  json.dump(dict_object,file_like_object)
+  #@argu:a python object,a file_like object
+  #@return:standard json string
+  json.dump(dict_object,file_like_object)
+  #@argu:json str
+  #@return:python object
+  json.loads(json_str)
+  #@argu:file_like object
+  #@return:python object
+  json.load(file_like_object)
+  
+  #To transfer any kind of python object to json
+  #we need to tell the json module how to transfer a python object to json.(the rules)
+  ```
+
+  [the json module:how to transfer between json file and python object]: https://www.liaoxuefeng.com/wiki/1016959663602400/1017624706151424
+
+  
+
