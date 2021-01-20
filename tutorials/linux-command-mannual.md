@@ -196,7 +196,8 @@
   ```bash
   #!/usr/bin/expect
   #可以写的很简单，用字符串分隔开即可
-  expect "hi" send "hi"
+  expect "hi"
+  send "hi"
   #也可以带有分支
   expect {
   "hi" {send "you hi too"}
@@ -206,7 +207,16 @@
   ```
 
 * 和进程对话——关键字`spawn`:如果不使用这个关键字，那么就只能对标准输入进行预测然后进行输出。但是`spawn`关键字使得我们可以和进程对话。
+
 * 让用户参与其中：在一些特殊的场合中，我们需要人来参与其中，这个时候就可以使用`interact`关键字
+
+* 注意事项：
+
+  * 不要忘记使用`\n`
+  * 严格按照原来的语法规则使用，例如数据库操作中的`;`
+  * 使用`interact`关键字可以很好地实现半自动化（大部分场合我们并不需要全自动化，只是省去一些繁琐的步骤而已）
+
+  
 
 #### 7. 使用静态库文件
 
@@ -292,12 +302,17 @@
   dE:效果同de，但是忽略标点
   dB:效果同db,但是忽略标点
   
-  #
+  #move the cursor
   xG:跳转到某一行
+  G:到末尾
+  h/l/j/k:光标向左、向右、向上、向下移动
+  0/^/$:到非空白文本最左边/到行首/到行尾
+gg：到第一行
+  
   
   
   ```
-
+  
   
 
 #### 11.Grep && FP
@@ -328,7 +343,7 @@
   grep [^g]oo file_name
   #use line init symbol ^,eg:the following command will filter the lines with 'the' beiginning
   grep ^the file_name
-  #use . which denotes a signle char
+  #use . which denotes a signle char,\d denotes a digital \w denotes a digit or a english character,\s denotes a blank space or a tab or a enter.
   grep g..d file_name
   #use * which denotes any times repetition of last char
   grep goo*d file_name
