@@ -365,4 +365,87 @@ gg：到第一行
   
   ```
 
-  
+#### 14 sed
+#### The command line
+
+* general syntax:`sed -e '..' -e '...' source_file'
+* additional options
+  * -f: read the script from the file
+  * -n: do not print anything unless the p command explictly is used
+  * -i: by default, sed will not change the source file, -i enables it.
+  * -r: use extend regular expression.
+
+#### The general overview of sed script
+
+* general syntax:`[ADDR1]ACTION[OPTION1] or [ADDR]{ACTION_1[OPTION1];ACTION_2[OPTION2]`
+* workflow of the sed script:
+  * 1:Read a single line into the pattern buffer
+  * 2:Apply all the commands to the pattern buffer
+  * 3:Print(or not which depends on the p and n option) the pattern buffer and clear it
+
+#### The Sed Addressing
+
+* Simply specify the line number: `number`
+* Specify the line range:`2-5`
+* Sxecify the line every x lines:`2~x`
+* Pattern: `/RE/`
+* Offset: `/Re/,+5 p/
+* Negation: `2,5!` selct the first line and lines after 5.
+
+#### The Sed Basic and Frequent Commands
+
+* s:substitute,like `s/RE/replacement/[FLAGS]`. 
+
+  * you can also use any character as the delimeters
+
+  * some frequently used flags:
+
+    ```shell
+    g:global
+    number:ignore the match before the number th occurence and replace from the number th on
+    p:if the substitution is made, print the new pattern space
+    w:if the substitution is made,write out the specified file.the /dev/stderr and /dev/stdout are supported
+    i:regular math case-insensitive
+    m:allow multiple lines match
+    ```
+
+  * back reference: it is possible that use the back reference in your replacement part.`\1` means the first regular expression math. At most 10 references are supported.In particular, the & means the whole match.Well, if you want to use the back reference, you need to wrap the regular expression with "()".
+
+* q:quit, you can also use Q which is used to stop the process.The difference between the q and Q is that q print the current line and quit while Q quits without printing anything.
+
+* d:delete the pattern space,and also begin the next cycle immediately.
+
+* p:print explictly
+
+* n:replace the pattern buffer with next line.If `-n` is specified, do not print the former pattern buffer,else print the buffer.
+
+* y:y is the command to transfer from the SRC set to the DST set which is like tr.
+
+* i:insert before the current line
+
+* a:append next to the current line
+
+* c:change the current line
+
+* l:l print the text in a unambigous way. like `aa$`
+
+* =:print the line number
+
+* z:zero, simply empty the pattern space
+
+* e:execute a external unix command.
+
+#### Hold Space Manipulation commands
+
+* h:copy the content of the pattern buffer to the hold buffer.
+* H:append the pattern buffer to the hold buffer.
+* g:copy the content of the hold buffer to the pattern buffer.
+* G:append the hold buffer to the pattern buffer.
+* x:exchange the hold buffer with the pattern buffer.
+
+#### Multiline manupulation
+
+* D:delete a line from the pattern space until the first newline and restart the cycle.
+* N:append a new line from the input file to the pattern space.
+* P:print the line from the pattern buffer until the first new line.
+* I:print data in a unambigous way.
