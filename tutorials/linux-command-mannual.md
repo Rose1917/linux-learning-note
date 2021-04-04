@@ -365,7 +365,7 @@ gg：到第一行
   
   ```
 
-#### 14 sed
+#### 12 sed
 #### The command line
 
 * general syntax:`sed -e '..' -e '...' source_file'
@@ -449,3 +449,76 @@ gg：到第一行
 * N:append a new line from the input file to the pattern space.
 * P:print the line from the pattern buffer until the first new line.
 * I:print data in a unambigous way.
+#### 13 GDB
+* To use GDB: gdb is most effective when it is debugging a program that has debugging symbols linked to it.With g++,this is accomplished with -g command option.For even more information, you can use -ggdb.
+* To load a program:use gdb program_file
+Trick:if you use makefile and find there are no sysmbols generated, please check if you add -g option to the final generation or at the complile(-c) proceed.ALL THE SYSBOLS ARE GENERATED AT THE COMPILE STAGE,NOT THE LINK STAGE!!!
+```gdb
+#begin to run until a breakpoint
+r
+
+#continue to run until a break point
+c
+
+#add breakpoints at the specific line in test.c
+b test.c:10
+
+#add the breakpoint at the specfic function
+b add
+
+#add the condition for the breakpoint
+condition 1(breakpoint number) var == 1
+
+#add a breakpoint at the current line
+b
+
+#delete a breakpoint
+d number
+
+#show all the break points
+info break
+
+#run the current function
+f
+
+#step N lines
+s N
+
+#add a watch point
+watch a==2
+
+#show all the watch points
+info watch
+
+#change the variable value
+set x=1
+
+#display the value of x
+display x
+
+#undisplay
+undisplay x
+
+#show the stack
+bt
+
+#move up the stack
+up
+
+#move down
+down
+
+#show the value of an address
+x addr
+
+#print the value
+p x
+
+#Some tips on debugging
+# * Found the wrong line:if possible.An effective way is to use gdb to prceed line by line.
+# * Debug as early as quickly
+# * Debug elegantly:we understand that debugging sometimes is time-assuming and annoying.But leave your code clean after debug.(Do not use printf too much,it will mess everthing up)
+
+
+
+```
