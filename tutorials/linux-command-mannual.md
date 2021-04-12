@@ -531,3 +531,4 @@ p x
 >blank line must also begin with >
 * 为一个bullet list添加一段话：先输入一个空行，然后空出一个字符，开始写。
 * 段落换行：使用两个空格
+* ...
