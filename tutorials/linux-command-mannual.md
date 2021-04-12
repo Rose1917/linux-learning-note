@@ -531,7 +531,7 @@ p x
 >blank line must also begin with >
 * 为一个bullet list添加一段话：先输入一个空行，然后空出一个字符，开始写。
 * 段落换行：使用两个空格
-* 下划线：`<u>text<\u>`
+* 下划线：`<u>text</u>`
 * 删除线：`~~text to delete~~`
 #### 15 configure the github ssh publickey
 * 使用`ssh-keygen -t rsa`生成一个新的密码在用户目录下`~/.ssh/`下面
