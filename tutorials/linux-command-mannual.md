@@ -362,7 +362,7 @@
   
   ```
 
-#### 12 sed
+#### 12 SED
 * general syntax:`sed -e '..' -e '...' source_file'
 * additional options
   * -f: read the script from the file
@@ -483,8 +483,7 @@ p x
 # * Debug as early as quickly
 # * Debug elegantly:we understand that debugging sometimes is time-assuming and annoying.But leave your code clean after debug.(Do not use printf too much,it will mess everthing up)
 ```
-
-#### 14 markdown
+ #### 14 MARKDOWN
 * 单独添加链接：`[link name](link-url)`
 * 引用：`[link name][link variable] [link-variable]:link-url`
 * 添加图片：`![image-name][image-url]`
@@ -497,7 +496,8 @@ p x
 * 段落换行：使用两个空格
 * 下划线：`<u>text</u>`
 * 删除线：`~~text to delete~~`
-#### 15 configure the github ssh publickey
+
+#### 15 CONFIGURE THE SSH KEY
 * 使用`ssh-keygen -t rsa`生成一个新的密码在用户目录下`~/.ssh/`下面
 * 将公钥粘贴在`github`安全的密钥部分
 * 以后使用的项目地址使用`git+ssh://git@github.com/username/repositoryname`
