@@ -518,7 +518,14 @@ p x
 # * Found the wrong line:if possible.An effective way is to use gdb to prceed line by line.
 # * Debug as early as quickly
 # * Debug elegantly:we understand that debugging sometimes is time-assuming and annoying.But leave your code clean after debug.(Do not use printf too much,it will mess everthing up)
-
-
-
 ```
+
+#### 14 markdown
+* 单独添加链接：`[link name](link-url)
+* 引用：`[link name][link variable] [link-variable]:link-url`
+* 添加图片：`![image-name][image-url]`
+* 添加图片引用：`![link name][link-variable] [link-variable]:link-url`
+* Block Reference
+>some thing to reference
+>
+>blank line must also begin with >
