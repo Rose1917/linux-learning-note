@@ -501,3 +501,18 @@ p x
 * 使用`ssh-keygen -t rsa`生成一个新的密码在用户目录下`~/.ssh/`下面
 * 将公钥粘贴在`github`安全的密钥部分
 * 以后使用的项目地址使用`git+ssh://git@github.com/username/repositoryname`
+
+#### 16 使用cron
+* 直接使用`crontab`命令即可访问编辑`crontab`服务。当见的参数如下图所示：
+```shell
+    -e 编辑当前用户的crontab
+    -l 显示当前用户的crontab
+    -u 编辑root用户的crontab
+    -r 删除当前用户的crontab
+```
+* `crontab`的配置文件都存在于`/var/spool/cron/crontabs/user-name`
+* `Ubuntu`用户默认的日志文件于`/var/log/syslog`,可以将`crontab`的配置文件单独弄出来使用下面的办法：
+>modify rsyslog config: open /etc/rsyslog.d/50-default.conf,remove # before cron.*
+>restart rsyslog service: sudo service rsyslog restart
+>restart cron service: service cron restart
+>now you can check cron log from file /var/log/cron.log
