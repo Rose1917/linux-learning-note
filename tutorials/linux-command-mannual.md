@@ -516,3 +516,10 @@ p x
 >restart rsyslog service: sudo service rsyslog restart
 >restart cron service: service cron restart
 >now you can check cron log from file /var/log/cron.log
+
+#### 17 Python中的路径
+* python中的路径有很多：
+    * 文件的路径:`__file__`变量保存了文件的路径，具体是绝对路径还是相对路径取决于输入——即如果输入对该文件使用的是绝对路径则变量中保存的就也是绝对路径，反之亦然。可以使用`os.path.abspath(__file__)`得到文件的绝对路径。
+    * 文件所在目录的路径：python提供了函数`os.path.split(abs_path)`可以将文件的**绝对路径**拆分为目录路径和文件名。但是一种更为方便的做法是使用`sys.path[0]`来获取文件所在的目录。
+    * Python搜索模块的路径:`sys.path`存储模块的搜索目录，第一项是当前文件的目录。
+    * 工作的路径:`getcwd`可以获取当前的工作目录，需要注意当前的工作目录和文件所在的目录没有必然关系。Python中打开文件搜索的是工作目录而非当前文件所在目录。可以使用`os.chcwd`函数来调整当前的工作目录。
